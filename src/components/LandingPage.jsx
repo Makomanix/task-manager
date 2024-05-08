@@ -1,9 +1,19 @@
+import clipboard from '../assets/no-projects.png'
+
 export default function LandingPage() {
 
   return (
-    <section className="flex space-between flex-col h-[95%] grow-[3] bg-stone-50">
-      <h1 className="">LANDING PAGE</h1>
-      <p>DELETE</p>
-    </section>
+    <div className="flex flex-col items-center mb-60 justify-center gap-8 h-[70%] grow-[3] bg-stone-50">
+      <img 
+        src={clipboard} 
+        alt='clipboard'
+        className='w-24'
+      />
+      <h3 className="text-2xl text-gray-600 font-bold">No Project Selected</h3>
+      <p className='text-xl mb-6 text-gray-400'>Select a project or get started with a new one</p>
+      <p className='text-xl h-14 w-52 items-center justify-center rounded-lg flex flex-row bg-black text-gray-400'>
+        <button className=''>Create new project</button>
+      </p>
+    </div>
   )
 }
