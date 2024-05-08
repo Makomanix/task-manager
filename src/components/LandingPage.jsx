@@ -3,7 +3,7 @@ import clipboard from '../assets/no-projects.png'
 export default function LandingPage() {
 
   return (
-    <div className="flex flex-col items-center mb-60 justify-center gap-8 h-[70%] grow-[3] bg-stone-50">
+    <div className="flex flex-col items-center justify-center gap-6 mt-40 grow-[3] shrink bg-stone-50">
       <img 
         src={clipboard} 
         alt='clipboard'
