@@ -1,12 +1,14 @@
-export default function Project() {
+export default function Project({currentProject, onDelete}) {
+
+  const { title } = currentProject 
 
   let task;
 
   return (
     <div className="flex flex-col grow-[3] gap-6 mt-28 pr-40">
       <span className="flex flex-row justify-between">
-        <h2 className="text-3xl font-semibold">Project Name</h2>
-        <button className="text-xl">Delete</button>
+        <h2 className="text-3xl font-semibold">{title}</h2>
+        <button className="text-xl" onClick={onDelete}>Delete</button>
       </span>
       <p className="text-xl">Due Date</p>
       <p className="text-xl">Description <br></br> Description</p>

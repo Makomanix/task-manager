@@ -1,9 +1,9 @@
-export default function CreateProject() {
+export default function CreateProject({ onCancel }) {
 
   return (
     <div className="flex flex-col grow-[3] mt-32 pr-40">
       <p className="self-end">
-        <button className="h-16 w-32 text-xl rounded-md m-1">Cancel</button>
+        <button className="h-16 w-32 text-xl rounded-md m-1" onClick={onCancel}>Cancel</button>
         <button className="h-16 w-32 text-xl rounded-md m-1 bg-black text-white">Save</button>
       </p>
       <form className="flex gap-2 flex-col mt-4">

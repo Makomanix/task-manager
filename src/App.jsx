@@ -9,18 +9,27 @@ function App() {
 
   const [ currentProject, setCurrentProject ] = useState(null);
   const [ projectArray, setProjectArray ] = useState([
-    {title: "Project 1"}, {title: "Project 2"}
+    {id: 1, title: "Project 1"}, {id: 2, title: "Project 2"}
   ]);
 
   function getProject(e) {
+    console.log(e);
     const project = e.target.innerText;
     const selectedProject = projectArray.find(item => item.title === project);
 
+    
     selectedProject ? setCurrentProject(selectedProject) : setCurrentProject({})
     // setCurrentProject(selectedProject)
     console.log(projectArray)
     console.log(project);
     console.log(selectedProject);
+  }
+  
+  function deleteOpenedProject(){
+    setProjectArray(prevArray => {
+      return prevArray.filter(item => item.title !== currentProject.title)
+    })
+    setCurrentProject(null)
   }
 
   return (
@@ -36,9 +45,9 @@ function App() {
               <LandingPage createNewProject={getProject}/>  
               :
               currentProject.title ? 
-                <Project />
+                <Project currentProject={currentProject} onDelete={deleteOpenedProject}/>
               :
-                <NewProject />
+                <NewProject onCancel={deleteOpenedProject}/>
           }
         </section>
       </main>
