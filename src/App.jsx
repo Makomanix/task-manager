@@ -6,26 +6,16 @@ import LandingPage from './components/LandingPage';
 import NewProject from './components/NewProject';
 
 function App() {
-
+  
   const [ projectState, setProjectState ] = useState({
     selectedProject: undefined,
     projects: []
   })
+  
+  let content;
+  let currentProject;
 
-  const [ currentProject, setCurrentProject ] = useState({});
-  const [ projectArray, setProjectArray ] = useState([]);
-
-
-  console.log(projectState);
-
-  function getProject(e) {
-    const project = e.target.innerText;
-    const selectedProject = projectState.projects.find(item => item.title === project);
-
-    selectedProject ? setCurrentProject(selectedProject) : setCurrentProject({title: '', description: '', dueDate: ''})
-  }
-
-  function handleAddProject() {
+  function handleStartNewProject() {
     setProjectState(prevState => {
       return {
         ...prevState,
@@ -34,7 +24,16 @@ function App() {
     })
   }
 
-  function handleNewProject(projectData) {
+  function handleSelectedProject(id) {
+    setProjectState(prevState => {
+      return {
+        ...prevState,
+        selectedProject: id
+      }
+    })
+  }
+
+  function handleAddProject(projectData) {
     setProjectState(prevState => {
       const newProject = {
         ...projectData, 
@@ -42,6 +41,7 @@ function App() {
       }
       return {
         ...prevState,
+        selectedProject: newProject.id,
         projects: [...prevState.projects, newProject]
       }
     })
@@ -56,21 +56,54 @@ function App() {
     })
   }
 
-  let content;
+  function handleAddTask(task) {
+    const updatedProject = {
+      ...currentProject,
+      tasks: [ ...currentProject.tasks, task]
+    }
+
+    setProjectState(prevState => {
+      const filteredProjects =  prevState.projects.filter(project => project.id !== updatedProject.id)
+      return {
+        ...prevState,
+        projects: [...filteredProjects, updatedProject]
+      }
+    })
+  }
+
+function handleUpdateProject(bool, ...args) {
+  for (let arg of args) {
+    console.log(arg);
+  }
+}
+
+  function handleDeleteProject(id) {
+    setProjectState(prevState => {
+      const filteredProjects = prevState.projects.filter(project => project.id !== id)
+      return {
+        ...prevState,
+        selectedProject: undefined,
+        projects: filteredProjects
+      }
+    })
+  }
+
 
   if (projectState.selectedProject === null) {
-    content = <NewProject  onNewProject={handleNewProject} onCancel={handleCancel} />
+    content = <NewProject  onAddProject={handleAddProject} onCancel={handleCancel} />
   } else if (projectState.selectedProject === undefined) {
-    content = <LandingPage onAddProject={handleAddProject}/>
+    content = <LandingPage onStartNewProject={handleStartNewProject}/>
   } else {
-    content = <Project currentProject={currentProject}/>
+    currentProject = projectState.projects.find(project => project.id === projectState.selectedProject)
+    content = <Project currentProject={currentProject} onDeleteProject={handleDeleteProject} 
+    onUpdateProject={handleUpdateProject} handleAddTask={handleAddTask}/>
   }
 
   return (
       <main className='mx-40 h-screen flex flex-row items-end bg-stone-50'>
         <section 
           className="h-[95%] w-[30%] rounded-tr-2xl mr-16 bg-black text-white">
-          <Sidebar onAddProject={handleAddProject} selectProject={getProject}/>
+          <Sidebar projectState={projectState} onStartNewProject={handleStartNewProject} onSelectProject={handleSelectedProject} />
         </section>
         <section className='h-[95%] w-[70%]'>
           {content}
