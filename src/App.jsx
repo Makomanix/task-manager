@@ -7,52 +7,77 @@ import NewProject from './components/NewProject';
 
 function App() {
 
-  const [ currentProject, setCurrentProject ] = useState(null);
-  const [ projectArray, setProjectArray ] = useState([
-    {id: 1, title: "Project 1"}, {id: 2, title: "Project 2"}
-  ]);
+  const [ projectState, setProjectState ] = useState({
+    selectedProject: undefined,
+    projects: []
+  })
+
+  const [ currentProject, setCurrentProject ] = useState({});
+  const [ projectArray, setProjectArray ] = useState([]);
+
+
+  console.log(projectState);
 
   function getProject(e) {
-    console.log(e);
     const project = e.target.innerText;
-    const selectedProject = projectArray.find(item => item.title === project);
+    const selectedProject = projectState.projects.find(item => item.title === project);
 
-    
-    selectedProject ? setCurrentProject(selectedProject) : setCurrentProject({})
-    // setCurrentProject(selectedProject)
-    console.log(projectArray)
-    console.log(project);
-    console.log(selectedProject);
+    selectedProject ? setCurrentProject(selectedProject) : setCurrentProject({title: '', description: '', dueDate: ''})
   }
-  
-  function deleteOpenedProject(){
-    setProjectArray(prevArray => {
-      return prevArray.filter(item => item.title !== currentProject.title)
+
+  function handleAddProject() {
+    setProjectState(prevState => {
+      return {
+        ...prevState,
+        selectedProject: null
+      }
     })
-    setCurrentProject(null)
+  }
+
+  function handleNewProject(projectData) {
+    setProjectState(prevState => {
+      const newProject = {
+        ...projectData, 
+        id: Math.random()
+      }
+      return {
+        ...prevState,
+        projects: [...prevState.projects, newProject]
+      }
+    })
+  }
+
+  function handleCancel() {
+    setProjectState(prevState => {
+      return {
+        ...prevState,
+        selectedProject: undefined
+      }
+    })
+  }
+
+  let content;
+
+  if (projectState.selectedProject === null) {
+    content = <NewProject  onNewProject={handleNewProject} onCancel={handleCancel} />
+  } else if (projectState.selectedProject === undefined) {
+    content = <LandingPage onAddProject={handleAddProject}/>
+  } else {
+    content = <Project currentProject={currentProject}/>
   }
 
   return (
-    <>
       <main className='mx-40 h-screen flex flex-row items-end bg-stone-50'>
         <section 
           className="h-[95%] w-[30%] rounded-tr-2xl mr-16 bg-black text-white">
-          <Sidebar projectArray={projectArray} selectProject={getProject}/>
+          <Sidebar onAddProject={handleAddProject} selectProject={getProject}/>
         </section>
         <section className='h-[95%] w-[70%]'>
-          {
-            !currentProject ? 
-              <LandingPage createNewProject={getProject}/>  
-              :
-              currentProject.title ? 
-                <Project currentProject={currentProject} onDelete={deleteOpenedProject}/>
-              :
-                <NewProject onCancel={deleteOpenedProject}/>
-          }
+          {content}
         </section>
       </main>
-    </>
-  );
-}
-
-export default App;
+          );
+        }
+        
+        export default App;
+        

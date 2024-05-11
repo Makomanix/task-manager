@@ -1,19 +1,42 @@
-export default function CreateProject({ onCancel }) {
+import Input from './Input';
+import { useRef } from 'react';
+
+export default function NewProject({  onNewProject, setProject, setProjectArray, onCancel }) {
+
+  const title = useRef();
+  const description = useRef();
+  const dueDate = useRef();
+
+  function handleSave(){
+    const enteredTitle = title.current.value;
+    const enteredDescription = description.current.value;
+    const enteredDueDate = dueDate.current.value;
+
+    onNewProject({
+      title: enteredTitle,
+      description: enteredDescription,
+      dueDate: enteredDueDate
+    })
+  }
+
+
+  function handleNewProject(){
+    setProjectArray(prevProjectArray => 
+        [...prevProjectArray, currentProject]     
+    )
+  }
 
   return (
     <div className="flex flex-col grow-[3] mt-32 pr-40">
       <p className="self-end">
         <button className="h-16 w-32 text-xl rounded-md m-1" onClick={onCancel}>Cancel</button>
-        <button className="h-16 w-32 text-xl rounded-md m-1 bg-black text-white">Save</button>
+        <button className="h-16 w-32 text-xl rounded-md m-1 bg-black text-white" onClick={handleSave}>Save</button>
       </p>
-      <form className="flex gap-2 flex-col mt-4">
-        <label className="text-xl font-semibold">Title</label>
-        <input type='text' className="h-12 text-xl bg-gray-200 rounded-md pl-2 mb-4" ></input>
-        <label className="text-xl font-semibold">Description</label>
-        <textarea id="description" name="description" maxLength='250' placeholder="250 Character Limit" className="h-20 text-xl bg-gray-200 rounded-md pl-2 mb-4"></textarea>
-        <label className="text-xl font-semibold">Due Date</label>
-        <input type='date' className="h-12 text-xl bg-gray-200 rounded-md pl-2 mb-4"></input>
-      </form>
+      <div  className="flex gap-2 flex-col mt-4" >
+        <Input ref={title} label='title'/>
+        <Input ref={description} textarea label='description'/>
+        <Input ref={dueDate} type='date' label='due date'/>
+      </div>
     </div>
   )
 }

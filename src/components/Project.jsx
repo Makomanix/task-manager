@@ -1,6 +1,6 @@
 export default function Project({currentProject, onDelete}) {
 
-  const { title } = currentProject 
+  const { title, dueDate, description } = currentProject 
 
   let task;
 
@@ -10,8 +10,8 @@ export default function Project({currentProject, onDelete}) {
         <h2 className="text-3xl font-semibold">{title}</h2>
         <button className="text-xl" onClick={onDelete}>Delete</button>
       </span>
-      <p className="text-xl">Due Date</p>
-      <p className="text-xl">Description <br></br> Description</p>
+      <p className="text-xl">{dueDate}</p>
+      <p className="text-xl">{description}</p>
       <hr className="h-1 bg-gray-400 border"></hr>
       <h3 className="text-2xl font-semibold">Tasks</h3>
       <div>
