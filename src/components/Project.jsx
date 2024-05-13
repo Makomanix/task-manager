@@ -1,6 +1,9 @@
-import { useRef } from "react"
+import { useState, useRef } from "react"
+import Input from "./Input";
 
-export default function Project({currentProject, onDeleteProject, onEdit, handleAddTask, onUpdateProject}) {
+export default function Project({currentProject, onDeleteProject, handleAddTask, onUpdateProject}) {
+
+  const[ editing, setIsEditing ] = useState(false);
 
   const { tasks, id, title, dueDate, description } = currentProject 
 
@@ -23,21 +26,25 @@ export default function Project({currentProject, onDeleteProject, onEdit, handle
 
   function onAddTask() {
     const enteredTask = newTask.current.value;
-
     handleAddTask(enteredTask)
   }
+
+  function handleEdit() {
+    setIsEditing(prevEdit => !prevEdit)
+  }
+  console.log(editing)
 
   return (
     <div className="flex flex-col grow-[3] gap-6 mt-28 pr-40">
       <span className="flex flex-row justify-between">
-        <h2 className="text-3xl font-semibold">{title}</h2>
+        {editing ? <Input /> : <h2 className="text-3xl font-semibold">{title}</h2>}
         <p>
-          <button className="text-xl" onClick={onEdit}>Edit</button>
+          <button className="text-xl" onClick={handleEdit}>{editing? "Save" : "Edit"}</button>
           <button className="text-xl" onClick={() => onDeleteProject(id)}>Delete</button>
         </p>
       </span>
-      <p className="text-xl">{dueDate}</p>
-      <p className="text-xl">{description}</p>
+      {editing ? <Input /> : <p className="text-xl">{dueDate}</p>}
+      {editing ? <Input /> : <p className="text-xl">{description}</p>}
       <hr className="h-1 bg-gray-400 border"></hr>
       <h3 className="text-2xl font-semibold">Tasks</h3>
       <div>
