@@ -6,12 +6,14 @@ export default function Project({currentProject, onDeleteProject, onEdit, handle
 
   const newTask = useRef();
 
+  console.log(tasks);
+
   const taskList = 
     <ol>
       {tasks.map(task => {
-        const taskItem = <li key={Math.random()} className="flex justify-between">
-          <p>{task}</p>
-          <button onClick={onUpdateProject(task)}>Delete Task</button>
+        const taskItem = <li key={task.id} className="flex justify-between">
+          <p>{task.content}</p>
+          <button onClick={() => onUpdateProject(task)}>Delete Task</button>
         </li>
 
         return taskItem;
