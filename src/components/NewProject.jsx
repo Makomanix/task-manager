@@ -12,20 +12,29 @@ export default function NewProject({ onSaveProject, onCancel, currentProject, ta
     const enteredDescription = description.current.value;
     const enteredDueDate = dueDate.current.value;
 
-    tasks ? onSaveProject({
+    console.log(enteredTitle, enteredDescription, enteredDueDate);
+
+
+    !currentProject ? onSaveProject({
       title: enteredTitle,
       description: enteredDescription,
       dueDate: enteredDueDate,
-      tasks: []
+      tasks: [],
+      id: Math.random().toFixed(5)
     }) 
     :
     onSaveProject({
       title: enteredTitle,
       description: enteredDescription,
       dueDate: enteredDueDate,
-      tasks: [tasks]
+      tasks: currentProject.tasks,
+      id: currentProject.id
     })
+    currentProject && onCancel();
+    currentProject && console.log(currentProject.tasks)
   }
+
+  console.log(currentProject)
 
   return (
     <div className="flex flex-col grow-[3] mt-32 pr-52">
@@ -34,9 +43,9 @@ export default function NewProject({ onSaveProject, onCancel, currentProject, ta
         <button className="h-16 w-32 text-xl bg-black text-white rounded-md m-1 border-stone-300 focus: focus:ring focus:ring-stone-600 hover:ring hover:ring-stone-600 hover:bg-stone-800" onClick={handleSave}>Save</button>
       </p>
       <div  className="flex gap-2 flex-col mt-4" >
-        <Input ref={title} label='title'/>
-        <Input ref={description} textarea maxLength='150' placeholder="150 Character Limit" label='description'/>
-        <Input ref={dueDate} type='date' label='due date'/>
+        <Input ref={title} label='title' defaultValue={currentProject ? currentProject.title : ''}/>
+        <Input ref={description} textarea maxLength='150' placeholder="150 Character Limit" label='description' defaultValue={currentProject ? currentProject.description : ''}/>
+        <Input ref={dueDate} type='date' label='due date' defaultValue={currentProject ? currentProject.dueDate : ''}/>
       </div>
     </div>
   )

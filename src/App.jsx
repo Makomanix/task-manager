@@ -34,16 +34,11 @@ function App() {
   }
 
   function handleAddProject(projectData) {
-    setProjectState(prevState => {
-      const newProject = {
-        ...projectData, 
-        id: Math.random()
-      }
-      console.log(projectData);
+    setProjectState(prevState => { 
       return {
         ...prevState,
-        selectedProject: newProject.id,
-        projects: [...prevState.projects, newProject]
+        selectedProject: projectData.id,
+        projects: [...prevState.projects, projectData]
       }
     })
   }
@@ -55,6 +50,16 @@ function App() {
         selectedProject: undefined
       }
     })
+  }
+
+  function handleDeleteTask(task) {
+    const remainingTasks = currentProject.tasks.filter(currentTask => currentTask.id !== task.id)
+
+    const updatedProject = {
+      ...currentProject,
+      tasks: remainingTasks
+    }
+    handleUpdateProject(updatedProject);
   }
 
   function handleAddTask(task) {
@@ -71,40 +76,14 @@ function App() {
       updatedProject = {
         ...currentProject,
         tasks: [{id: taskID, content: task}]
-    }
-  }
-  console.log(updatedProject.tasks)
-
-    setProjectState(prevState => {
-      const filteredProjects =  prevState.projects.filter(project => project.id !== updatedProject.id)
-      return {
-        ...prevState,
-        projects: [...filteredProjects, updatedProject]
       }
-    })
-  }
-
-  function handleDeleteTask(task) {
-
-    const remainingTasks = currentProject.tasks.filter(currentTask => currentTask.id !== task.id)
-
-    const updatedProject = {
-      ...currentProject,
-      tasks: remainingTasks
     }
-
-    handleUpdateProject(updatedProject);
-
-    // setProjectState(prevState => {
-    //   const filteredProjects =  prevState.projects.filter(project => project.id !== updatedProject.id)
-    //   return {
-    //     ...prevState,
-    //     projects: [...filteredProjects, updatedProject]
-    //   }
-    // })
+    handleUpdateProject(updatedProject)
   }
+
 
   function handleUpdateProject(updatedProject) {
+    console.log(updatedProject)
     setProjectState(prevState => {
       const filteredProjects =  prevState.projects.filter(project => project.id !== updatedProject.id)
       return {
@@ -125,13 +104,13 @@ function App() {
     })
   }
 
-
   if (projectState.selectedProject === null) {
     content = <NewProject  onSaveProject={handleAddProject} onCancel={handleCancel} />
   } else if (projectState.selectedProject === undefined) {
     content = <LandingPage onStartNewProject={handleStartNewProject}/>
   } else {
     currentProject = projectState.projects.find(project => project.id === projectState.selectedProject)
+    console.log(currentProject.tasks);
     content = <Project currentProject={currentProject} onDeleteProject={handleDeleteProject} 
     onDeleteTask={handleDeleteTask} handleAddTask={handleAddTask} onUpdateProject={handleUpdateProject}/>
   }

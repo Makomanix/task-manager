@@ -9,7 +9,7 @@ export default function Project({currentProject, onDeleteProject, handleAddTask,
 
   const newTask = useRef();
 
-  console.log
+  console.log(tasks);
 
   let taskList;
 
@@ -17,10 +17,13 @@ export default function Project({currentProject, onDeleteProject, handleAddTask,
     taskList = 
       <ol>
         {tasks.map(task => {
-          const taskItem = <li key={task.id} className="flex justify-between">
+          const taskItem = 
+          <li key={task.id} className="flex justify-between">
             <p>{task.content}</p>
             <button onClick={() => onDeleteTask(task)}>Delete Task</button>
           </li>
+          console.log(task)
+          console.log(taskItem)
 
           return taskItem;
           })
@@ -36,8 +39,6 @@ export default function Project({currentProject, onDeleteProject, handleAddTask,
   function handleEdit() {
     setIsEditing(prevEdit => !prevEdit)
   }
-  
-  console.log(tasks);
 
   return ( isEditing ? <NewProject onSaveProject={onUpdateProject} currentProject={currentProject} onCancel={handleEdit} tasks={tasks}/> :
     <div className="flex flex-col grow-[3] gap-6 mt-28 pr-40">
