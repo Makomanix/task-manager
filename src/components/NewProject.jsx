@@ -1,7 +1,7 @@
 import Input from './Input';
 import { useRef } from 'react';
 
-export default function NewProject({  onAddProject, onCancel }) {
+export default function NewProject({ onSaveProject, onCancel, currentProject, tasks }) {
 
   const title = useRef();
   const description = useRef();
@@ -12,11 +12,18 @@ export default function NewProject({  onAddProject, onCancel }) {
     const enteredDescription = description.current.value;
     const enteredDueDate = dueDate.current.value;
 
-    onAddProject({
+    tasks ? onSaveProject({
       title: enteredTitle,
       description: enteredDescription,
       dueDate: enteredDueDate,
       tasks: []
+    }) 
+    :
+    onSaveProject({
+      title: enteredTitle,
+      description: enteredDescription,
+      dueDate: enteredDueDate,
+      tasks: [tasks]
     })
   }
 

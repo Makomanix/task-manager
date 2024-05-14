@@ -39,6 +39,7 @@ function App() {
         ...projectData, 
         id: Math.random()
       }
+      console.log(projectData);
       return {
         ...prevState,
         selectedProject: newProject.id,
@@ -58,11 +59,21 @@ function App() {
 
   function handleAddTask(task) {
     const taskID = Math.random().toFixed(5);
-    const updatedProject = {
-      ...currentProject,
-      tasks: [ ...currentProject.tasks, {id: taskID, content: task}]
+
+    let updatedProject;
+
+    if (currentProject.tasks[0] !== undefined) {
+      updatedProject = {
+        ...currentProject,
+        tasks: [ ...currentProject.tasks, {id: taskID, content: task}]
+      }
+    } else {
+      updatedProject = {
+        ...currentProject,
+        tasks: [{id: taskID, content: task}]
     }
-    console.log(updatedProject);
+  }
+  console.log(updatedProject.tasks)
 
     setProjectState(prevState => {
       const filteredProjects =  prevState.projects.filter(project => project.id !== updatedProject.id)
@@ -73,7 +84,7 @@ function App() {
     })
   }
 
-  function handleUpdateProject(task) {
+  function handleDeleteTask(task) {
 
     const remainingTasks = currentProject.tasks.filter(currentTask => currentTask.id !== task.id)
 
@@ -82,6 +93,18 @@ function App() {
       tasks: remainingTasks
     }
 
+    handleUpdateProject(updatedProject);
+
+    // setProjectState(prevState => {
+    //   const filteredProjects =  prevState.projects.filter(project => project.id !== updatedProject.id)
+    //   return {
+    //     ...prevState,
+    //     projects: [...filteredProjects, updatedProject]
+    //   }
+    // })
+  }
+
+  function handleUpdateProject(updatedProject) {
     setProjectState(prevState => {
       const filteredProjects =  prevState.projects.filter(project => project.id !== updatedProject.id)
       return {
@@ -104,13 +127,13 @@ function App() {
 
 
   if (projectState.selectedProject === null) {
-    content = <NewProject  onAddProject={handleAddProject} onCancel={handleCancel} />
+    content = <NewProject  onSaveProject={handleAddProject} onCancel={handleCancel} />
   } else if (projectState.selectedProject === undefined) {
     content = <LandingPage onStartNewProject={handleStartNewProject}/>
   } else {
     currentProject = projectState.projects.find(project => project.id === projectState.selectedProject)
     content = <Project currentProject={currentProject} onDeleteProject={handleDeleteProject} 
-    onUpdateProject={handleUpdateProject} handleAddTask={handleAddTask}/>
+    onDeleteTask={handleDeleteTask} handleAddTask={handleAddTask} onUpdateProject={handleUpdateProject}/>
   }
 
   return (
