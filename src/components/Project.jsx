@@ -19,8 +19,8 @@ export default function Project({currentProject, onDeleteProject, handleAddTask,
         {tasks.map(task => {
           const taskItem = 
           <li key={task.id} className="flex justify-between">
-            <p>{task.content}</p>
-            <button onClick={() => onDeleteTask(task)}>Delete Task</button>
+            <p className="w-full h-8 my-2 mr-4 px-2 bg-gray-200 rounded-md text-lg">{task.content}</p>
+            <button className="h-8 w-32 text-lg bg-black text-white rounded-md m-1 my-2 border-stone-300 focus: focus:ring focus:ring-gray-500 hover:ring hover:ring-gray-500 hover:bg-gray-500" onClick={() => onDeleteTask(task)}>Delete Task</button>
           </li>
           console.log(task)
           console.log(taskItem)
@@ -34,6 +34,7 @@ export default function Project({currentProject, onDeleteProject, handleAddTask,
   function onAddTask() {
     const enteredTask = newTask.current.value;
     handleAddTask(enteredTask)
+    newTask.current.value = ''
   }
 
   function handleEdit() {
@@ -41,12 +42,12 @@ export default function Project({currentProject, onDeleteProject, handleAddTask,
   }
 
   return ( isEditing ? <NewProject onSaveProject={onUpdateProject} currentProject={currentProject} onCancel={handleEdit} tasks={tasks}/> :
-    <div className="flex flex-col grow-[3] gap-6 mt-28 pr-40">
+    <div className="flex flex-col grow-[3] gap-6 mt-32 pr-52">
       <span className="flex flex-row justify-between">
-        <h2 className="text-3xl font-semibold">{title}</h2>
+        <h2 className="text-4xl font-semibold">{title}</h2>
         <p>
-          <button className="text-xl" onClick={handleEdit}>{isEditing? "Save" : "Edit"}</button>
-          <button className="text-xl" onClick={() => onDeleteProject(id)}>Delete</button>
+          <button className="h-16 w-32 text-xl rounded-md m-1 border-stone-600 hover:ring hover:ring-stone-600" onClick={handleEdit}>Edit</button>
+          <button className="h-16 w-32 text-xl bg-black text-white rounded-md m-1 border-stone-300 focus: focus:ring focus:ring-gray-500 hover:ring hover:ring-gray-500 hover:bg-gray-500" onClick={() => onDeleteProject(id)}>Delete</button>
         </p>
       </span>
       <p className="text-xl">{dueDate}</p>
