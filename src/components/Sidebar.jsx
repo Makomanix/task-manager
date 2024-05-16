@@ -6,10 +6,13 @@ export default function Sidebar({ projectState, onStartNewProject, onSelectProje
   const titles = 
       <ul className="flex flex-col w-[100%] gap-8">
         {projectState.projects.map(project => {
+
           let active = project.id === projectState.selectedProject ? 'bg-gray-500' : ''
-          const title = <li key={project.id}>
-            <button className={`w-[100%] text-left text-xl px-2 py-1 rounded-md bg-gray-700 + ${active} hover:bg-gray-500`} onClick={() => onSelectProject(project.id)}>{project.title}</button>
-          </li>
+
+          const title =  
+            <li key={project.id}>
+              <button className={`w-[100%] text-left text-xl px-2 py-1 rounded-md bg-gray-700 + ${active} hover:bg-gray-500`} onClick={() => onSelectProject(project.id)}>{project.title}</button>
+            </li>
 
           return title;
           })
