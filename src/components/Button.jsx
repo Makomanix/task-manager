@@ -7,7 +7,7 @@ export default function Button({children, active, ...props}) {
       cssButton += ' border-stone-600 hover:ring-stone-600 hover:bg-red-400';
       break;
     case 'Cancel':
-      cssButton += ' border-stone-600 hover:ring-stone-600';
+      cssButton += ' border-stone-600 hover:ring-stone-600 hover:bg-red-400';
       break;
     case 'Save':
     case 'Edit':
