@@ -11,12 +11,13 @@ export default function Project({currentProject, onDeleteProject, handleAddTask,
 
   const newTask = useRef();
   const modal = useRef();
+  const modalDelete = useRef();
 
   let taskList;
 
   if (tasks[0] !== undefined) {
     taskList = 
-      <ol>
+    <ol>
         {tasks.map(task => {
           const taskItem = 
           <li key={task.id} className="flex justify-between text-lg rounded-md">
@@ -27,7 +28,7 @@ export default function Project({currentProject, onDeleteProject, handleAddTask,
           return taskItem;
           })
         }
-      </ol>
+    </ol>
   }
 
   function onAddTask() {
@@ -46,18 +47,26 @@ export default function Project({currentProject, onDeleteProject, handleAddTask,
     setIsEditing(prevEdit => !prevEdit)
   }
 
+  function handleDeleteProject() {
+    modalDelete.current.open()
+  }
+
   return  (
     <>
-    <Modal ref={modal} buttonLabel='Okay'>
+    <Modal ref={modal}>
       <h2 className="text-2xl text-gray-600 font-bold mb-4">Invalid Input</h2>
       <p className='text-xl mb-2 text-gray-500'>Please enter a value into the task input field</p>
+    </Modal>
+    <Modal ref={modalDelete} confirmDelete={onDeleteProject}>
+      <h2 className="text-2xl text-gray-600 font-bold mb-4">Delete Project</h2>
+      <p className='text-xl mb-2 text-gray-500'>To delete this project click confirm.</p>
     </Modal>
       {isEditing ? <NewProject onSaveProject={onUpdateProject} currentProject={currentProject} onCancel={handleEdit} tasks={tasks}/> :
       <div className="flex flex-col grow-[3] gap-6 mt-32 pr-52 text-xl">
         <header className="flex flex-row justify-between">
           <h2 className="text-4xl font-semibold">{title}</h2>
           <p>
-            <Button onClick={() => onDeleteProject(id)}>Delete</Button>
+            <Button onClick={handleDeleteProject}>Delete</Button>
             <Button onClick={handleEdit}>Edit</Button>
           </p>
         </header >

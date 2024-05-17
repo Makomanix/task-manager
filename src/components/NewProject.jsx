@@ -36,12 +36,11 @@ export default function NewProject({ onSaveProject, onCancel, currentProject, ta
       id: currentProject.id
     })
     currentProject && onCancel();
-    currentProject && console.log(currentProject.tasks)
   }
 
   return (
     <>
-      <Modal ref={modal} buttonLabel='Close'>
+      <Modal ref={modal} >
           <h2 className="text-2xl text-gray-600 font-bold mb-4">Invalid Input</h2>
           <p className='text-xl mb-2 text-gray-500'>Oh no ... a value is missing from the form</p>
           <p className='text-xl mb-2 text-gray-500' >Please enter a valid value into each field</p>

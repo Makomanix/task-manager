@@ -93,9 +93,10 @@ function App() {
     })
   }
 
-  function handleDeleteProject(id) {
+  function handleDeleteProject(e) {
+    e.preventDefault();
     setProjectState(prevState => {
-      const filteredProjects = prevState.projects.filter(project => project.id !== id)
+      const filteredProjects = prevState.projects.filter(project => project.id !== prevState.selectedProject)
       return {
         ...prevState,
         selectedProject: undefined,

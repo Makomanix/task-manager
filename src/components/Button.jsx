@@ -1,5 +1,7 @@
 export default function Button({children, active, ...props}) {
 
+  console.log(children);
+
   let cssButton = 'h-16 w-32 rounded-md m-1 hover:ring'
 
   switch (children) {
@@ -17,7 +19,7 @@ export default function Button({children, active, ...props}) {
       cssButton = 'h-8 px-1 rounded-md border-stone-600 hover:ring hover:ring-stone-600';
       break;
     case 'Delete Task':
-      cssButton = 'h-8 w-32 bg-black text-white  mx-1 my-2 rounded-md border-stone-300 hover:ring hover:ring-stone-500 hover:bg-red-400';
+      cssButton = 'h-8 w-32 bg-black text-white mx-1 my-2 rounded-md border-stone-300 hover:ring hover:ring-stone-500 hover:bg-red-400';
       break;
     case '+ Add Project':
       cssButton = 'w-[60%] rounded-md px-4 text-xl h-14 mb-8 bg-gray-700 hover:bg-gray-500';
@@ -25,11 +27,19 @@ export default function Button({children, active, ...props}) {
     case 'Create New Project':
       cssButton = 'h-full w-full bg-black text-white border-stone-300 rounded-lg hover:ring hover:ring-gray-500 hover:bg-gray-500' ;
       break;
+    case 'Close':
+      cssButton = 'bg-black text-white rounded-md px-4 py-1 mt-6 mx-1 border-stone-300 focus: focus:ring focus:ring-gray-500 hover:ring hover:ring-gray-500 hover:bg-gray-500'
+      break;
+    case 'Confirm':
+      cssButton = 'bg-black text-white rounded-md px-4 py-1 mt-6 mx-1 border-stone-300 focus: focus:ring focus:ring-gray-500 hover:ring hover:ring-gray-500 hover:bg-red-400'
+      break;
     default:
       active ?
       cssButton = 'w-[100%] text-left text-xl px-2 py-1 bg-gray-500 rounded-md bg-gray-700 hover:bg-gray-500':
       cssButton = 'w-[100%] text-left text-xl px-2 py-1 rounded-md bg-gray-700 hover:bg-gray-500'
   }
+
+
 
   return (
     <button className={cssButton}{...props}>{children}</button>
