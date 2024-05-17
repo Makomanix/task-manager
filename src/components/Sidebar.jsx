@@ -1,17 +1,19 @@
+import Button from "./Button";
+
 export default function Sidebar({ projectState, onStartNewProject, onSelectProject }) {
-
-
-  console.log(projectState.selectedProject);
 
   const titles = 
       <ul className="flex flex-col w-[100%] gap-8">
         {projectState.projects.map(project => {
+          let active = false; 
 
-          let active = project.id === projectState.selectedProject ? 'bg-gray-500' : ''
+          if (project.id === projectState.selectedProject) {
+            active = true;
+          }
 
           const title =  
             <li key={project.id}>
-              <button className={`w-[100%] text-left text-xl px-2 py-1 rounded-md bg-gray-700 + ${active} hover:bg-gray-500`} onClick={() => onSelectProject(project.id)}>{project.title}</button>
+              <Button active={active} onClick={() => onSelectProject(project.id)}>{project.title}</Button>
             </li>
 
           return title;
@@ -20,14 +22,11 @@ export default function Sidebar({ projectState, onStartNewProject, onSelectProje
       </ul>
 
   return (
-      <div className="flex flex-col items-start w-[75%] mx-12 gap-8 mt-28">
+      <div className="flex flex-col items-start mx-12 gap-8 mt-28">
         <h2 className="text-3xl mb-4 uppercase">
           Your Projects
         </h2>
-        <button className="w-auto rounded-md px-4 text-xl h-14 mb-8 bg-gray-700 hover:bg-gray-500"
-        onClick={onStartNewProject}>
-          + Add Project
-        </button>
+        <Button onClick={onStartNewProject}>+ Add Project</Button>
         {titles}
       </div>
   )

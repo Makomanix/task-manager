@@ -1,6 +1,7 @@
 import Input from './Input';
-import { useRef, useState } from 'react';
+import { useRef } from 'react';
 import Modal from './Modal';
+import Button from './Button';
 
 export default function NewProject({ onSaveProject, onCancel, currentProject, tasks }) {
   const modal = useRef();
@@ -45,10 +46,10 @@ export default function NewProject({ onSaveProject, onCancel, currentProject, ta
           <p className='text-xl mb-2 text-gray-500'>Oh no ... a value is missing from the form</p>
           <p className='text-xl mb-2 text-gray-500' >Please enter a valid value into each field</p>
       </Modal>
-      <div className="flex flex-col grow-[3] mt-32 pr-52">
+      <div className="flex flex-col grow-[3] mt-32 pr-52 text-xl">
         <p className="self-end">
-          <button className="h-16 w-32 text-xl rounded-md m-1 border-stone-600 hover:ring hover:ring-stone-600" onClick={onCancel}>Cancel</button>
-          <button className="h-16 w-32 text-xl bg-black text-white rounded-md m-1 border-stone-300 focus: focus:ring focus:ring-gray-500 hover:ring hover:ring-gray-500 hover:bg-gray-500" onClick={handleSave}>Save</button>
+        <Button onClick={onCancel}>Cancel</Button>
+        <Button onClick={handleSave}>Save</Button>
         </p>
         <div  className="flex gap-2 flex-col mt-4" >
           <Input ref={title} label='title' maxLength='35' defaultValue={currentProject ? currentProject.title : ''}/>
