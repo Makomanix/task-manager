@@ -47,7 +47,7 @@ export default function Project({currentProject, onDeleteProject, handleAddTask,
     setIsEditing(prevEdit => !prevEdit)
   }
 
-  function handleDeleteProject() {
+  function handleModalDeleteProject() {
     modalDelete.current.open()
   }
 
@@ -66,7 +66,7 @@ export default function Project({currentProject, onDeleteProject, handleAddTask,
         <header className="flex flex-row justify-between">
           <h2 className="text-4xl font-semibold">{title}</h2>
           <p>
-            <Button onClick={handleDeleteProject}>Delete</Button>
+            <Button onClick={handleModalDeleteProject}>Delete</Button>
             <Button onClick={handleEdit}>Edit</Button>
           </p>
         </header >
