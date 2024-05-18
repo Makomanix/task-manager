@@ -17,7 +17,7 @@ export default function Project({currentProject, onDeleteProject, handleAddTask,
 
   if (tasks[0] !== undefined) {
     taskList = 
-    <ol>
+    <ul>
         {tasks.map(task => {
           const taskItem = 
           <li key={task.id} className="flex justify-between text-lg rounded-md">
@@ -28,7 +28,7 @@ export default function Project({currentProject, onDeleteProject, handleAddTask,
           return taskItem;
           })
         }
-    </ol>
+    </ul>
   }
 
   function onAddTask() {

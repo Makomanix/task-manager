@@ -64,14 +64,13 @@ function App() {
 
   function handleAddTask(task) {
     const taskID = Math.random().toFixed(5);
-
     let updatedProject;
 
     if (currentProject.tasks[0] !== undefined) {
       updatedProject = {
         ...currentProject,
         tasks: [ ...currentProject.tasks, {id: taskID, content: task}]
-      }
+      }      
     } else {
       updatedProject = {
         ...currentProject,
@@ -83,14 +82,13 @@ function App() {
 
 
   function handleUpdateProject(updatedProject) {
-    console.log(updatedProject)
     setProjectState(prevState => {
       const filteredProjects =  prevState.projects.filter(project => project.id !== updatedProject.id)
       return {
         ...prevState,
         projects: [...filteredProjects, updatedProject]
-      }
-    })
+      };
+    });
   }
 
   function handleDeleteProject(e) {
@@ -101,8 +99,8 @@ function App() {
         ...prevState,
         selectedProject: undefined,
         projects: filteredProjects
-      }
-    })
+      };
+    });
   }
 
   if (projectState.selectedProject === null) {
