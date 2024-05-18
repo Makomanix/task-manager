@@ -75,9 +75,8 @@ export default function Project({currentProject, onDeleteProject, handleAddTask,
         <hr className="h-1 bg-gray-400 border"></hr>
         <h3 className="text-2xl font-semibold">Tasks</h3>
         <div>
-          <label>New</label>
           <p>
-            <input ref={newTask} type="text" className="bg-gray-200 rounded-md h-8 w-[60%] mr-6 "></input>
+            <input ref={newTask} type="text" className="bg-gray-200 rounded-md h-8 w-[65%] mr-6 "></input>
             <Button onClick={onAddTask}>Add Task</Button>
           </p>
         </div>
