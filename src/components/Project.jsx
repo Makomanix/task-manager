@@ -29,7 +29,7 @@ export default function Project({currentProject, onDeleteProject, handleAddTask,
           })
         }
     </ul>
-  }
+  } 
 
   function onAddTask() {
     const enteredTask = newTask.current.value;
